@@ -10,5 +10,5 @@ npm install
 npm run build
 
 # Run the command line tool
-node dist/setup.js --number-of-players 2
+node dist/index.js --number-of-players 2
 ```

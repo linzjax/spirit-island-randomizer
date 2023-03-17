@@ -1,9 +1,4 @@
-import chooseResults from "./index"
-
-if (process.argv.length === 2) {
-  console.error("Expected at least one argument!")
-  process.exit(1)
-}
+import chooseResults from "./choose"
 
 if (!process.argv.includes("--number-of-players")) {
   console.error(
@@ -12,22 +7,41 @@ if (!process.argv.includes("--number-of-players")) {
   process.exit(1)
 }
 
-const findNumberOfPlayers = () => {
+const findArgumentValues: (flag: string) => string = (flag) => {
+  return process.argv[process.argv.findIndex((arg) => arg === flag) + 1]
+}
+
+const findNumberOfPlayers: () => number = () => {
   // Find the index of --number-of-layers and select the next argument provided
-  const numberOfPlayers = parseInt(
-    process.argv[
-      process.argv.findIndex((arg) => arg === "--number-of-players") + 1
-    ]
-  )
+  const numberOfPlayers = parseInt(findArgumentValues("--number-of-players"))
 
   if (isNaN(numberOfPlayers)) {
     console.error(
-      `\nNumber of players must be a... number. Not a ${typeof numberOfPlayers}: --number-of-players <number>\n`
+      `\nNumber of players must be a... number. Not a ${typeof numberOfPlayers}: --number-of-players <number 1-6>\n`
     )
+    process.exit(1)
+  }
+
+  if (numberOfPlayers > 6) {
+    console.error(`\nNumber of players cannot exceed 6\n`)
     process.exit(1)
   }
 
   return numberOfPlayers
 }
 
-console.log(chooseResults({ numberOfPlayers: findNumberOfPlayers() }))
+const includeAdversary: () => boolean = () => {
+  return !!process.argv.find((arg) => arg === "--include-adversary")
+}
+
+const includeScenario: () => boolean = () => {
+  return !!process.argv.find((arg) => arg === "--include-scenario")
+}
+
+console.log(
+  chooseResults({
+    numberOfPlayers: findNumberOfPlayers(),
+    includeAdversary: includeAdversary(),
+    includeScenario: includeScenario()
+  })
+)
