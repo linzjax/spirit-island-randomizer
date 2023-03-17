@@ -38,10 +38,15 @@ const includeScenario: () => boolean = () => {
   return !!process.argv.find((arg) => arg === "--include-scenario")
 }
 
+const includeBlightCard: () => boolean = () => {
+  return !!process.argv.find((arg) => arg === "--include-blight")
+}
+
 console.log(
   chooseResults({
     numberOfPlayers: findNumberOfPlayers(),
     includeAdversary: includeAdversary(),
-    includeScenario: includeScenario()
+    includeScenario: includeScenario(),
+    includeBlightCard: includeBlightCard()
   })
 )

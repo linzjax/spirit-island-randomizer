@@ -30,9 +30,13 @@ const includeAdversary = () => {
 const includeScenario = () => {
     return !!process.argv.find((arg) => arg === "--include-scenario");
 };
+const includeBlightCard = () => {
+    return !!process.argv.find((arg) => arg === "--include-blight");
+};
 console.log((0, choose_1.default)({
     numberOfPlayers: findNumberOfPlayers(),
     includeAdversary: includeAdversary(),
-    includeScenario: includeScenario()
+    includeScenario: includeScenario(),
+    includeBlightCard: includeBlightCard()
 }));
 //# sourceMappingURL=index.js.map

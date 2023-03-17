@@ -187,12 +187,18 @@ const chooseResults: (args: {
   numberOfPlayers: number
   includeAdversary: boolean
   includeScenario: boolean
+  includeBlightCard: boolean
 }) => {
   spirits: any[]
   adversary?: string
   scenario?: string
   blightCard?: string
-} = ({ numberOfPlayers, includeAdversary, includeScenario }) => {
+} = ({
+  numberOfPlayers,
+  includeAdversary,
+  includeScenario,
+  includeBlightCard
+}) => {
   const spirits = chooseSpirits(numberOfPlayers)
 
   const finalSpiritList = spirits.map((spirit) => {
@@ -208,8 +214,7 @@ const chooseResults: (args: {
   })
 
   const results = {
-    spirits: finalSpiritList,
-    blightCard: chooseBlight().name
+    spirits: finalSpiritList
   }
 
   if (includeAdversary) {
@@ -218,6 +223,10 @@ const chooseResults: (args: {
 
   if (includeScenario) {
     results["scenario"] = chooseScenario().name
+  }
+
+  if (includeBlightCard) {
+    results["blight card"] = chooseBlight().name
   }
 
   return results

@@ -176,7 +176,7 @@ const blightCardList = [
     }
 ];
 const chooseBlight = () => chooseOption(blightCardList);
-const chooseResults = ({ numberOfPlayers, includeAdversary, includeScenario }) => {
+const chooseResults = ({ numberOfPlayers, includeAdversary, includeScenario, includeBlightCard }) => {
     const spirits = chooseSpirits(numberOfPlayers);
     const finalSpiritList = spirits.map((spirit) => {
         if (spirit.aspects) {
@@ -189,14 +189,16 @@ const chooseResults = ({ numberOfPlayers, includeAdversary, includeScenario }) =
         return spirit;
     });
     const results = {
-        spirits: finalSpiritList,
-        blightCard: chooseBlight().name
+        spirits: finalSpiritList
     };
     if (includeAdversary) {
         results["adversary"] = chooseAdversary().name;
     }
     if (includeScenario) {
         results["scenario"] = chooseScenario().name;
+    }
+    if (includeBlightCard) {
+        results["blight card"] = chooseBlight().name;
     }
     return results;
 };
