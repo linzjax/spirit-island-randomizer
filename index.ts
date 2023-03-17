@@ -17,41 +17,37 @@ const findNumberOfPlayers: () => number = () => {
 
   if (isNaN(numberOfPlayers)) {
     console.error(
-      `\nNumber of players must be a... number. Not a ${typeof numberOfPlayers}: --number-of-players <number 1-6>\n`
+      `\nError: Number of players must be a number. Argument provided: ${findArgumentValues(
+        "--number-of-players"
+      )}: --number-of-players <number 1-6>\n`
     )
     process.exit(1)
   }
 
   if (numberOfPlayers < 1) {
-    console.error(`\nYou need at least 1 player to play. Don't be silly.\n`)
+    console.error(
+      `\nError: You need at least 1 player to play. Don't be silly.\n`
+    )
     process.exit(1)
   }
 
   if (numberOfPlayers > 6) {
-    console.error(`\nNumber of players cannot exceed 6\n`)
+    console.error(`\nError: Number of players cannot exceed 6.\n`)
     process.exit(1)
   }
 
   return numberOfPlayers
 }
 
-const includeAdversary: () => boolean = () => {
-  return !!process.argv.find((arg) => arg === "--include-adversary")
-}
-
-const includeScenario: () => boolean = () => {
-  return !!process.argv.find((arg) => arg === "--include-scenario")
-}
-
-const includeBlightCard: () => boolean = () => {
-  return !!process.argv.find((arg) => arg === "--include-blight")
+const includeArgument: (name: string) => boolean = (name) => {
+  return !!process.argv.find((arg) => arg === `--include-${name}`)
 }
 
 console.log(
   chooseResults({
     numberOfPlayers: findNumberOfPlayers(),
-    includeAdversary: includeAdversary(),
-    includeScenario: includeScenario(),
-    includeBlightCard: includeBlightCard()
+    includeAdversary: includeArgument("adversary"),
+    includeScenario: includeArgument("scenario"),
+    includeBlightCard: includeArgument("blight")
   })
 )
