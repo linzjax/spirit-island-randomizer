@@ -22,6 +22,11 @@ const findNumberOfPlayers: () => number = () => {
     process.exit(1)
   }
 
+  if (numberOfPlayers < 1) {
+    console.error(`\nYou need at least 1 player to play. Don't be silly.\n`)
+    process.exit(1)
+  }
+
   if (numberOfPlayers > 6) {
     console.error(`\nNumber of players cannot exceed 6\n`)
     process.exit(1)
