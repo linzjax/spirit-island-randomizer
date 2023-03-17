@@ -1,48 +1,57 @@
-const chooseOption = (list) => {
-  return list.splice(Math.floor(Math.random() * (list.length)), 1)[0]
+const chooseOption = (list: { name: string }[]) => {
+  return list.splice(Math.floor(Math.random() * list.length), 1)[0]
 }
 
 const spiritList = [
   {
     name: "Lightning's Swift Strike",
-    aspects: [{
-      name: "Standard"
-    },
-    {
-      name: "Pandemonium"
-    },
-    {
-      name: "Wind"
-    }]
+    aspects: [
+      {
+        name: "Standard"
+      },
+      {
+        name: "Pandemonium"
+      },
+      {
+        name: "Wind"
+      }
+    ]
   },
   {
     name: "River Surges in Sunlight",
-    aspects: [{
-      name: "Standard"
-    },
-    {
-      name: "Sunshine"
-    }]
+    aspects: [
+      {
+        name: "Standard"
+      },
+      {
+        name: "Sunshine"
+      }
+    ]
   },
   {
     name: "Vital Strength of the Earth",
-    aspects: [{
-      name: "Standard"
-    },
-    {
-      name: "Resilience"
-    }]
+    aspects: [
+      {
+        name: "Standard"
+      },
+      {
+        name: "Resilience"
+      }
+    ]
   },
   {
     name: "Shadows Flicker Like Flame",
-    aspects: [{
-      name: "Standard"
-    },
-    {
-      name: "Madness"
-    },{
-      name: "Reach"
-    }]
+    aspects: [
+      {
+        name: "Standard"
+      },
+      {
+        name: "Madness"
+      },
+      {
+        name: "Reach"
+      }
+    ]
   },
   {
     name: "Thunderspeaker"
@@ -90,7 +99,7 @@ const spiritList = [
 
 const chooseSpirits = (numberOfPlayers) => {
   let spirits = []
-  for (i = 0; i < numberOfPlayers; i++) {
+  for (let i = 0; i < numberOfPlayers; i++) {
     spirits.push(chooseOption(spiritList))
   }
   return spirits
@@ -111,7 +120,7 @@ const adversaryList = [
   },
   {
     name: "Russia"
-  },
+  }
 ]
 
 const chooseAdversary = () => chooseOption(adversaryList)
@@ -174,7 +183,7 @@ const blightCardList = [
 
 const chooseBlight = () => chooseOption(blightCardList)
 
-exports.chooseResults = ({numberOfPlayers}) => {
+const chooseResults = ({ numberOfPlayers }) => {
   const spirits = chooseSpirits(numberOfPlayers)
 
   const finalSpiritList = spirits.map((spirit) => {
@@ -189,8 +198,6 @@ exports.chooseResults = ({numberOfPlayers}) => {
     return spirit
   })
 
-
-
   return {
     spirits: finalSpiritList,
     adversary: chooseAdversary().name,
@@ -199,4 +206,4 @@ exports.chooseResults = ({numberOfPlayers}) => {
   }
 }
 
-
+export default chooseResults
