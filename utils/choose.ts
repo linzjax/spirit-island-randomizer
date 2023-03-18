@@ -1,5 +1,6 @@
 import {
   Spirit,
+  SpiritWithAspects,
   Adversary,
   Scenario,
   BlightCard,
@@ -8,12 +9,12 @@ import {
 } from "../types/index"
 
 const chooseOption = (
-  list: Array<Spirit | Adversary | Scenario | BlightCard>
+  list: Array<SpiritWithAspects | Adversary | Scenario | BlightCard>
 ) => {
   return list.splice(Math.floor(Math.random() * list.length), 1)[0]
 }
 
-const spiritList: Spirit[] = [
+const spiritList: SpiritWithAspects[] = [
   {
     name: "Lightning's Swift Strike",
     aspects: [
@@ -108,7 +109,7 @@ const spiritList: Spirit[] = [
   }
 ]
 
-const chooseSpirits: (numberOfPlayers: number) => Spirit[] = (
+const chooseSpirits: (numberOfPlayers: number) => SpiritWithAspects[] = (
   numberOfPlayers
 ) => {
   let spirits = []
@@ -203,8 +204,9 @@ const chooseResults: (args: GameSetupOptions) => GameSetup = ({
   includeBlightCard
 }) => {
   const spirits = chooseSpirits(numberOfPlayers)
+  console.log(spirits)
 
-  const finalSpiritList = spirits.map((spirit) => {
+  const finalSpiritList = spirits.map((spirit: SpiritWithAspects) => {
     if (spirit.aspects) {
       const aspect = chooseOption(spirit.aspects)
       return {

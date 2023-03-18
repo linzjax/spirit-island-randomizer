@@ -2,10 +2,13 @@ import Head from "next/head"
 import Image from "next/image"
 import styles from "@/styles/Home.module.css"
 import chooseResult from "../utils/choose"
+import { Spirit, GameSetup } from "../types/index"
 import { useState, useEffect } from "react"
 
 export default function Home() {
-  const [results, setResults] = useState({})
+  const [results, setResults] = useState<GameSetup>({
+    spirits: []
+  })
   const [isLoading, setLoading] = useState(false)
 
   useEffect(() => {
@@ -38,19 +41,7 @@ export default function Home() {
         ) : (
           <>
             <h2>Spirits</h2>
-            <ul>
-              {results.spirits &&
-                results.spirits.map((spirit) => {
-                  return (
-                    <li>
-                      {spirit.name}
-                      {spirit.aspect && (
-                        <span> - Aspect: {spirit.aspect.name}</span>
-                      )}
-                    </li>
-                  )
-                })}
-            </ul>
+            <Spirits spirits={results.spirits} />
             {results.blightCard && (
               <>
                 <h2>Blight</h2>
@@ -73,5 +64,20 @@ export default function Home() {
         )}
       </main>
     </>
+  )
+}
+
+const Spirits = (args: { spirits: Spirit[] }) => {
+  return (
+    <ul>
+      {args.spirits.map((spirit: Spirit) => {
+        return (
+          <li>
+            {spirit.name}
+            {spirit.aspect && <span> - Aspect: {spirit.aspect.name}</span>}
+          </li>
+        )
+      })}
+    </ul>
   )
 }
