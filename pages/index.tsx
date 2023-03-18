@@ -1,16 +1,11 @@
 import Head from "next/head"
 import Image from "next/image"
-import { Inter } from "next/font/google"
 import styles from "@/styles/Home.module.css"
-import chooseResult from "utils/choose"
+import chooseResult from "../utils/choose"
 import { useState, useEffect } from "react"
 
-const inter = Inter({ subsets: ["latin"] })
-
 export default function Home() {
-  const [results, setResults] = useState({
-    spirits: []
-  })
+  const [results, setResults] = useState({})
   const [isLoading, setLoading] = useState(false)
 
   useEffect(() => {
@@ -44,16 +39,17 @@ export default function Home() {
           <>
             <h2>Spirits</h2>
             <ul>
-              {results.spirits.map((spirit) => {
-                return (
-                  <li>
-                    {spirit.name}
-                    {spirit.aspect && (
-                      <span> - Aspect: {spirit.aspect.name}</span>
-                    )}
-                  </li>
-                )
-              })}
+              {results.spirits &&
+                results.spirits.map((spirit) => {
+                  return (
+                    <li>
+                      {spirit.name}
+                      {spirit.aspect && (
+                        <span> - Aspect: {spirit.aspect.name}</span>
+                      )}
+                    </li>
+                  )
+                })}
             </ul>
             {results.blightCard && (
               <>
