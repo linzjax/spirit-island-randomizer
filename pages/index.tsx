@@ -22,7 +22,7 @@ export default function Home() {
       })
     )
     setLoading(false)
-  }, {})
+  }, [])
 
   if (isLoading) return <>Loading...</>
 
