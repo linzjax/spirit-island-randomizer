@@ -7,7 +7,9 @@ import { Spirit, GameSetup } from "../types/index"
 import { useState, useEffect } from "react"
 
 export default function Home() {
-  const [results, setResults] = useState<GameSetup>({})
+  const [results, setResults] = useState<GameSetup>({
+    spirits: []
+  })
   const [isLoading, setLoading] = useState(false)
   const [numberOfPlayers, setNumberOfPlayers] = useState(6)
   // const [includeBlightCard, setIncludeBlightCard] = useState(false)
@@ -81,7 +83,7 @@ export default function Home() {
           <>Loading...</>
         ) : (
           <>
-            {results.spirits && (
+            {results.spirits.length > 0 && (
               <>
                 <h2>Spirits</h2>
                 <Spirits spirits={results.spirits} />
