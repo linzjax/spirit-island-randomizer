@@ -11,19 +11,37 @@ export default function Home() {
     spirits: []
   })
   const [isLoading, setLoading] = useState(false)
-  const [numberOfPlayers, setNumberOfPlayers] = useState(1)
+  const [numberOfPlayers, setNumberOfPlayers] = useState(6)
   const [includeBlightCard, setIncludeBlightCard] = useState(false)
   const [includeAdversary, setIncludeAdversary] = useState(false)
   const [includeScenario, setIncludeScenario] = useState(false)
 
   const updateNumberOfPlayers = (e: React.FormEvent<HTMLInputElement>) => {
-    // invariant(e !== null, "Event was null")
-    // invariant(e.target !== null, "Event target was null")
     invariant(
       typeof parseInt(e.currentTarget.value) === "number",
       "value provided was not a number"
     )
     setNumberOfPlayers(parseInt(e.currentTarget.value))
+  }
+
+  const onSumbit = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    const data = e.target as EventTarget & {
+      numberOfPlayers: { value: number }
+      includeBlightCard: { checked: boolean }
+      includeAdversary: { checked: boolean }
+      includeScenario: { checked: boolean }
+    }
+
+    const response = await fetch(
+      `/api/choose?numberOfPlayers=${data.numberOfPlayers.value}&includeBlightCard=${data.includeBlightCard.checked}&includeAdversary=${data.includeAdversary.checked}&includeScenario=${data.includeScenario.checked}`,
+      { method: "GET" }
+    )
+
+    const result = await response.json()
+
+    setResults(result)
   }
 
   useEffect(() => {
@@ -53,7 +71,7 @@ export default function Home() {
         <h1>Spirit Island Game Randomizer</h1>
         {numberOfPlayers}
         <h2>Settings</h2>
-        <form>
+        <form onSubmit={onSumbit}>
           <label htmlFor="numberOfPlayers">Number of Players: </label>
           <input
             type="number"

@@ -7,6 +7,7 @@ import {
   GameSetup,
   GameSetupOptions
 } from "../types/index"
+import spiritJSON from "./spirits.json"
 
 const chooseOption = (
   list: Array<SpiritWithAspects | Adversary | Scenario | BlightCard>
@@ -14,107 +15,13 @@ const chooseOption = (
   return list.splice(Math.floor(Math.random() * list.length), 1)[0]
 }
 
-const spiritList: SpiritWithAspects[] = [
-  {
-    name: "Lightning's Swift Strike",
-    aspects: [
-      {
-        name: "Standard"
-      },
-      {
-        name: "Pandemonium"
-      },
-      {
-        name: "Wind"
-      }
-    ]
-  },
-  {
-    name: "River Surges in Sunlight",
-    aspects: [
-      {
-        name: "Standard"
-      },
-      {
-        name: "Sunshine"
-      }
-    ]
-  },
-  {
-    name: "Vital Strength of the Earth",
-    aspects: [
-      {
-        name: "Standard"
-      },
-      {
-        name: "Resilience"
-      }
-    ]
-  },
-  {
-    name: "Shadows Flicker Like Flame",
-    aspects: [
-      {
-        name: "Standard"
-      },
-      {
-        name: "Madness"
-      },
-      {
-        name: "Reach"
-      }
-    ]
-  },
-  {
-    name: "Thunderspeaker"
-  },
-  {
-    name: "A Spread of Rampant Green"
-  },
-  {
-    name: "Ocean's Hungry Grasp"
-  },
-  {
-    name: "Bringer of Dreams and Nightmares"
-  },
-  {
-    name: "Stone's Unyielding Defiance"
-  },
-  {
-    name: "Shifting Memory of Ages"
-  },
-  {
-    name: "Grinning Trickster Stirs Up Trouble"
-  },
-  {
-    name: "Lure of the Deep Wilderness"
-  },
-  {
-    name: "Many Minds Move as One"
-  },
-  {
-    name: "Volcano Looming High"
-  },
-  {
-    name: "Shroud of Silent Mist"
-  },
-  {
-    name: "Vengeance as a Burning Plague"
-  },
-  {
-    name: "Starlight Seeks Its Form"
-  },
-  {
-    name: "Fractured Days Split the Sky"
-  }
-]
-
 const chooseSpirits: (numberOfPlayers: number) => SpiritWithAspects[] = (
   numberOfPlayers
 ) => {
   let spirits = []
+  let fullSpiritList = [...spiritJSON.spirits]
   for (let i = 0; i < numberOfPlayers; i++) {
-    spirits.push(chooseOption(spiritList))
+    spirits.push(chooseOption(fullSpiritList))
   }
   return spirits
 }
