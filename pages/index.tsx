@@ -7,14 +7,12 @@ import { Spirit, GameSetup } from "../types/index"
 import { useState, useEffect } from "react"
 
 export default function Home() {
-  const [results, setResults] = useState<GameSetup>({
-    spirits: []
-  })
+  const [results, setResults] = useState<GameSetup>({})
   const [isLoading, setLoading] = useState(false)
   const [numberOfPlayers, setNumberOfPlayers] = useState(6)
-  const [includeBlightCard, setIncludeBlightCard] = useState(false)
-  const [includeAdversary, setIncludeAdversary] = useState(false)
-  const [includeScenario, setIncludeScenario] = useState(false)
+  // const [includeBlightCard, setIncludeBlightCard] = useState(false)
+  // const [includeAdversary, setIncludeAdversary] = useState(false)
+  // const [includeScenario, setIncludeScenario] = useState(false)
 
   const updateNumberOfPlayers = (e: React.FormEvent<HTMLInputElement>) => {
     invariant(
@@ -44,19 +42,6 @@ export default function Home() {
     setResults(result)
   }
 
-  useEffect(() => {
-    setLoading(true)
-    setResults(
-      chooseResult({
-        numberOfPlayers,
-        includeBlightCard,
-        includeAdversary,
-        includeScenario
-      })
-    )
-    setLoading(false)
-  }, [])
-
   if (isLoading) return <>Loading...</>
 
   return (
@@ -69,32 +54,39 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <h1>Spirit Island Game Randomizer</h1>
-        {numberOfPlayers}
         <h2>Settings</h2>
         <form onSubmit={onSumbit}>
           <label htmlFor="numberOfPlayers">Number of Players: </label>
           <input
             type="number"
-            min="1"
+            // min="1"
             max="6"
             value={numberOfPlayers}
             onChange={updateNumberOfPlayers}
             id="numberOfPlayers"
           />
+          <br />
           <label htmlFor="includeBlightCard">Include Blight Card: </label>
           <input type="checkbox" id="includeBlightCard" />
+          <br />
           <label htmlFor="includeAdversary">Include Adversary: </label>
           <input type="checkbox" id="includeAdversary" />
+          <br />
           <label htmlFor="includeScenario">Include Scenario: </label>
           <input type="checkbox" id="includeScenario" />
+          <br />
           <button type="submit">Submit</button>
         </form>
         {isLoading ? (
           <>Loading...</>
         ) : (
           <>
-            <h2>Spirits</h2>
-            <Spirits spirits={results.spirits} />
+            {results.spirits && (
+              <>
+                <h2>Spirits</h2>
+                <Spirits spirits={results.spirits} />
+              </>
+            )}
             {results.blightCard && (
               <>
                 <h2>Blight</h2>

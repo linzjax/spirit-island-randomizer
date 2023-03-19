@@ -111,7 +111,6 @@ const chooseResults: (args: GameSetupOptions) => GameSetup = ({
   includeBlightCard
 }) => {
   const spirits = chooseSpirits(numberOfPlayers)
-  console.log(spirits)
 
   const finalSpiritList = spirits.map((spirit: SpiritWithAspects) => {
     if (spirit.aspects) {
